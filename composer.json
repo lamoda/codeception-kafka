@@ -1,0 +1,26 @@
+{
+  "name": "lamoda/codeception-kafka",
+  "description": "Kafka helper for codeception tests",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Lamoda developers",
+      "homepage": "https://tech.lamoda.ru/"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "codeception/codeception": "~2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lamoda\\Codeception\\Extension\\": "src/Extension/"
+    }
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.13",
+    "kwn/php-rdkafka-stubs": "^1.1.0"
+  }
+}
