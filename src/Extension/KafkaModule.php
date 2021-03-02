@@ -6,6 +6,7 @@ namespace Lamoda\Codeception\Extension;
 
 use Codeception\Module;
 use Exception;
+use Lamoda\Codeception\Extension\MessageSerializer\ArrayMessageSerializer;
 use Lamoda\Codeception\Extension\MessageSerializer\MessageSerializerInterface;
 use RdKafka\Conf;
 use RdKafka\Consumer;
@@ -17,6 +18,7 @@ use RdKafka\TopicConf;
 class KafkaModule extends Module
 {
     protected const DEFAULT_PARTITION = 0;
+    protected const FLUSH_TIMEOUT_MS = 3000;
 
     /**
      * @var MessageSerializerInterface
@@ -83,6 +85,10 @@ class KafkaModule extends Module
         $topic = $producer->newTopic($topicName, $this->topicConf);
 
         $topic->produce($partition ?? static::DEFAULT_PARTITION, 0, $message);
+
+        if (method_exists($producer, 'flush')) {
+            $producer->flush(self::FLUSH_TIMEOUT_MS);
+        }
     }
 
     public function putMessageListInTopic(string $topicName, array $messages, ?int $partition = null): void
